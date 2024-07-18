@@ -1,7 +1,7 @@
 // ignore_for_file: unnecessary_null_comparison, use_build_context_synchronously, avoid_print, non_constant_identifier_names
 
-import 'package:community_build/homepage.dart';
-import 'package:community_build/signup_page.dart';
+import 'package:community_build/pages/homepage.dart';
+import 'package:community_build/pages/signup_page.dart';
 import 'package:community_build/uihelper.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';

@@ -1,10 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:community_build/chatroom.dart';
+import 'package:community_build/chatted_user.dart';
 import 'package:community_build/group_chat/groupchat_screen.dart';
-import 'package:community_build/loginpage.dart';
+import 'package:community_build/pages/loginpage.dart';
+import 'package:community_build/photoupload.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class MyHomePage extends StatefulWidget {
   @override
@@ -241,9 +242,27 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
         title: Text("Home Screen"),
         automaticallyImplyLeading: false,
         actions: [
-          IconButton(
-            icon: Icon(Icons.logout),
-            onPressed: () => logOut(context),
+          Row(
+            children: [
+              IconButton(
+                  icon: Icon(Icons.add_a_photo),
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(builder: (_) => UploadPhotoPage()),
+                    );
+                  }),
+              IconButton(
+                  icon: Icon(Icons.message),
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(builder: (_) => ChattedUsersPage()),
+                    );
+                  }),
+              IconButton(
+                icon: Icon(Icons.logout),
+                onPressed: () => logOut(context),
+              ),
+            ],
           )
         ],
       ),
