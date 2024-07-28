@@ -26,7 +26,9 @@ class _LoginPageState extends State<LoginPage> {
             email: email, password: password);
         if (user != null) {
           Navigator.push(
-              context, MaterialPageRoute(builder: (_) => MyHomePage()));
+              context,
+              MaterialPageRoute(
+                  builder: (_) => MyHomePage(uid: _auth.currentUser!.uid)));
           print("LoggedIn successfully!");
         }
       } on FirebaseAuthException catch (ex) {

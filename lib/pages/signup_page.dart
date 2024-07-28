@@ -151,7 +151,10 @@ class _SignUpPageState extends State<SignUpPage> {
           print("Account created successfully");
           user.user!.updateDisplayName(name);
           Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (context) => MyHomePage()));
+              context,
+              MaterialPageRoute(
+                  builder: (context) =>
+                      MyHomePage(uid: _auth.currentUser!.uid)));
 
           await _firestore.collection("users").doc(_auth.currentUser?.uid).set(
             {

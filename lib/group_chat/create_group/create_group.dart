@@ -51,7 +51,9 @@ class _CreateGroupState extends State<CreateGroup> {
     });
 
     Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(builder: (_) => MyHomePage()), (route) => false);
+        MaterialPageRoute(
+            builder: (_) => MyHomePage(uid: _auth.currentUser!.uid)),
+        (route) => false);
   }
 
   @override

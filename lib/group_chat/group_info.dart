@@ -217,7 +217,8 @@ class _GroupInfoState extends State<GroupInfo> {
         .delete();
 
     Navigator.of(context).pushAndRemoveUntil(
-      MaterialPageRoute(builder: (_) => MyHomePage()),
+      MaterialPageRoute(
+          builder: (_) => MyHomePage(uid: _auth.currentUser!.uid)),
       (route) => false,
     );
   }
