@@ -18,6 +18,23 @@ class UiHelper {
     );
   }
 
+  static customTextFieldP(
+      TextEditingController controller, String text, IconButton, bool toHide,
+      {required String? Function(dynamic value) validator}) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+      child: TextField(
+        controller: controller,
+        obscureText: toHide,
+        decoration: InputDecoration(
+            hintText: text,
+            suffixIcon: IconButton,
+            border:
+                OutlineInputBorder(borderRadius: BorderRadius.circular(25))),
+      ),
+    );
+  }
+
   static customButton(VoidCallback voidCallback, String text) {
     return SizedBox(
       height: 50,

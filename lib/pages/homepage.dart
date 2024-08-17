@@ -535,7 +535,17 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
     final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        //centerTitle: true,
+        leading: Builder(
+          builder: (context) {
+            return IconButton(
+              icon: const Icon(Icons.menu),
+              onPressed: () {
+                Scaffold.of(context).openDrawer();
+              },
+            );
+          },
+        ),
+        centerTitle: true,
         automaticallyImplyLeading: false,
         title: FutureBuilder<String?>(
           future: getUserName(),
@@ -577,6 +587,34 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
             ],
           )
         ],
+      ),
+      drawer: Drawer(
+        child: ListView(
+          // Important: Remove any padding from the ListView.
+          padding: EdgeInsets.zero,
+          children: [
+            const DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.blue,
+              ),
+              child: Text('Drawer Header'),
+            ),
+            ListTile(
+              title: const Text('Profile'),
+              onTap: () {
+                // Update the state of the app.
+                // ...
+              },
+            ),
+            ListTile(
+              title: const Text('Delete Account'),
+              onTap: () {
+                // Update the state of the app.
+                // ...
+              },
+            ),
+          ],
+        ),
       ),
       body: isLoading
           ? Center(
@@ -702,8 +740,11 @@ Future logOut(BuildContext context) async {
 
   try {
     await _auth.signOut().then((value) {
-      Navigator.push(
-          context, MaterialPageRoute(builder: (_) => const LoginPage()));
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (_) => const LoginPage()),
+        (Route<dynamic> route) => false,
+      );
     });
   } catch (e) {
     print("error");

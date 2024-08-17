@@ -139,6 +139,7 @@ class _SignUpPageState extends State<SignUpPage> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final nameController = TextEditingController();
+  late bool _passwordVisible;
 
   Future<void> signUp(String name, String email, String password) async {
     final _auth = FirebaseAuth.instance;
@@ -171,6 +172,12 @@ class _SignUpPageState extends State<SignUpPage> {
         UiHelper.customAlertBox(context, 'An error occurred');
       }
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _passwordVisible = true;
   }
 
   @override
@@ -221,11 +228,22 @@ class _SignUpPageState extends State<SignUpPage> {
                 return null;
               },
             ),
-            UiHelper.customTextField(
+            UiHelper.customTextFieldP(
               passwordController,
               "Password",
-              Icons.password,
-              true,
+              IconButton(
+                icon: Icon(
+                  // Based on passwordVisible state choose the icon
+                  _passwordVisible ? Icons.visibility_off : Icons.visibility,
+                ),
+                onPressed: () {
+                  // Update the state i.e. toogle the state of passwordVisible variable
+                  setState(() {
+                    _passwordVisible = !_passwordVisible;
+                  });
+                },
+              ),
+              _passwordVisible,
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return 'Please enter a password';

@@ -17,6 +17,7 @@ class _LoginPageState extends State<LoginPage> {
   final _auth = FirebaseAuth.instance;
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordcontroller = TextEditingController();
+  late bool _passwordVisible;
   final _formKey = GlobalKey<FormState>();
 
   Future<void> Login(String email, String password) async {
@@ -37,6 +38,12 @@ class _LoginPageState extends State<LoginPage> {
         UiHelper.customAlertBox(context, 'An error occurred');
       }
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _passwordVisible = true;
   }
 
   @override
@@ -74,11 +81,37 @@ class _LoginPageState extends State<LoginPage> {
                 return null;
               },
             ),
-            UiHelper.customTextField(
+            // UiHelper.customTextField(
+            //   passwordcontroller,
+            //   "Password",
+            //   Icons.password,
+            //   true,
+            //   validator: (value) {
+            //     if (value == null || value.isEmpty) {
+            //       return 'Please enter a password';
+            //     }
+            //     if (value.length < 8) {
+            //       return 'Please enter a password with at least 8 characters';
+            //     }
+            //     return null;
+            //   },
+            // ),
+            UiHelper.customTextFieldP(
               passwordcontroller,
               "Password",
-              Icons.password,
-              true,
+              IconButton(
+                icon: Icon(
+                  // Based on passwordVisible state choose the icon
+                  _passwordVisible ? Icons.visibility_off : Icons.visibility,
+                ),
+                onPressed: () {
+                  // Update the state i.e. toogle the state of passwordVisible variable
+                  setState(() {
+                    _passwordVisible = !_passwordVisible;
+                  });
+                },
+              ),
+              _passwordVisible,
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return 'Please enter a password';
