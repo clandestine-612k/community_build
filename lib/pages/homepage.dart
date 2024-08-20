@@ -426,6 +426,7 @@ import 'package:community_build/blog/blog_page.dart';
 import 'package:community_build/chatroom.dart';
 import 'package:community_build/chatted_user.dart';
 import 'package:community_build/group_chat/groupchat_screen.dart';
+import 'package:community_build/pages/deleteaccount.dart';
 import 'package:community_build/pages/loginpage.dart';
 import 'package:community_build/blog/photoupload.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -601,16 +602,16 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
             ),
             ListTile(
               title: const Text('Profile'),
-              onTap: () {
-                // Update the state of the app.
-                // ...
-              },
+              onTap: () {},
             ),
             ListTile(
               title: const Text('Delete Account'),
               onTap: () {
-                // Update the state of the app.
-                // ...
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) => Deleteaccount(),
+                  ),
+                );
               },
             ),
           ],
