@@ -429,6 +429,7 @@ import 'package:community_build/group_chat/groupchat_screen.dart';
 import 'package:community_build/pages/deleteaccount.dart';
 import 'package:community_build/pages/loginpage.dart';
 import 'package:community_build/blog/photoupload.dart';
+import 'package:community_build/pages/profile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -602,7 +603,15 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
             ),
             ListTile(
               title: const Text('Profile'),
-              onTap: () {},
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) => ProfilePage(
+                      uid: widget.uid,
+                    ),
+                  ),
+                );
+              },
             ),
             ListTile(
               title: const Text('Delete Account'),

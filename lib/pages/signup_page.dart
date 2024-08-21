@@ -162,7 +162,11 @@ class _SignUpPageState extends State<SignUpPage> {
               "name": name,
               "email": email,
               "status": "Unavailable",
-              "uid": _auth.currentUser?.uid
+              "uid": _auth.currentUser?.uid,
+              "passingYear": 2024,
+              "currentJob": "Software Engineer",
+              'phone': 1234567890,
+              'course': "MCA"
             },
           );
         }
