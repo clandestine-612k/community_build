@@ -1,8 +1,11 @@
 import 'package:community_build/firebase_options.dart';
 import 'package:community_build/pages/loginpage.dart';
+import 'package:community_build/voice_assistance/secrets.dart';
+import 'package:community_build/voice_assistance/voice_assistance.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
+import 'package:flutter_gemini/flutter_gemini.dart';
 
 //AIzaSyCVDDSAGXxwsJtrUXdyltggbvFp6sd5bwg
 
@@ -11,15 +14,16 @@ void main() async {
   //await Firebase.initializeApp();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
+  Gemini.init(apiKey: GeminiAPIKey);
   runApp(const MyApp());
-  final model = GenerativeModel(
-      model: 'gemini-1.5-flash',
-      apiKey: "AIzaSyCVDDSAGXxwsJtrUXdyltggbvFp6sd5bwg");
-  final content = [
-    Content.text('Where is Harcourt Butler Technical university')
-  ];
-  final response = await model.generateContent(content);
-  print(response.text);
+  // final model = GenerativeModel(
+  //     model: 'gemini-1.5-flash',
+  //     apiKey: "AIzaSyCVDDSAGXxwsJtrUXdyltggbvFp6sd5bwg");
+  // final content = [
+  //   Content.text('Where is Harcourt Butler Technical university')
+  // ];
+  // final response = await model.generateContent(content);
+  // print(response.text);
 }
 
 class MyApp extends StatelessWidget {

@@ -421,6 +421,8 @@
 //   }
 // }
 
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:community_build/blog/blog_page.dart';
 import 'package:community_build/chatroom.dart';
@@ -430,7 +432,10 @@ import 'package:community_build/pages/deleteaccount.dart';
 import 'package:community_build/pages/loginpage.dart';
 import 'package:community_build/blog/photoupload.dart';
 import 'package:community_build/pages/profile.dart';
+import 'package:community_build/services/notification_services.dart';
+import 'package:community_build/voice_assistance/voice_assistance.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -448,6 +453,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final TextEditingController _search = TextEditingController();
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  NotificationServices notificationServices = NotificationServices();
 
   Future<String?> getUserName() async {
     try {
@@ -467,6 +473,24 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     setStatus("Online");
+    notificationServices.requestNotificationPermission();
+    notificationServices.firebaseInit();
+    notificationServices.getTokenRefresh();
+    notificationServices.getDeviceToken(widget.uid).then(
+      (value) {
+        print('Device token');
+        print(value);
+      },
+    );
+    //   void firebaseInit(BuildContext context) {
+    //   FirebaseMessaging.onMessage.listen((message) {
+
+    //     if (Platform.isAndroid) {
+    //       initLocalNotifications(context, message);
+    //       showNotification(message);
+    //     }
+    //   });
+    // }
   }
 
   void setStatus(String status) async {
@@ -733,6 +757,16 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
                   onPressed: () => Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (_) => BlogPage(),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 16),
+                FloatingActionButton(
+                  heroTag: 'btn3', // Use unique heroTag for each FAB
+                  child: Icon(Icons.assistant),
+                  onPressed: () => Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (_) => VoiceAssistance(),
                     ),
                   ),
                 ),
