@@ -4,38 +4,38 @@ import 'package:flutter_gemini/flutter_gemini.dart';
 
 class GeminiAIService {
   final Gemini gemini = Gemini.instance;
-  //final List<Map<String, String>> messages = [];
-
-  // Future<String> isArtPromptAPI(String prompt) async {
-
-  // }
-
   Future<String> geminiAPIf(String prompt) async {
-    var content;
-    gemini.streamGenerateContent(prompt).listen((value) {
-      print(value.output);
-      content = value.output;
-      print(content);
-    }).onError((e) {
+    try {
+      String content = '';
+
+      // Using await to collect the complete response
+      await for (var value in gemini.streamGenerateContent(prompt)) {
+        content += value.output!; // Accumulate output if it's streamed
+        print(value.output);
+      }
+
+      return content.isNotEmpty ? content : 'No content available';
+    } catch (e) {
       log('streamGenerateContent exception', error: e);
-    });
-    return content;
+      return 'Error occurred while generating content';
+    }
   }
 
-  Future<String> imagedescription(String prompt, String imageurl) async {
-    final file = File(imageurl);
-    var content;
-    gemini
-        .textAndImage(
-            text: prompt,
+  Future<String> imagedescription(String prompt, File imageurl) async {
+    try {
+      final fileBytes = imageurl.readAsBytesSync();
+      final response = await gemini.textAndImage(
+        text: prompt,
+        images: [fileBytes],
+      );
 
-            /// text
-            images: [file.readAsBytesSync()]
-
-            /// list of images
-            )
-        .then((value) => content = value?.content?.parts?.last.text ?? '')
-        .catchError((e) => log('textAndImageInput', error: e));
-    return content;
+      // Check for a valid response and extract content
+      final content =
+          response?.content?.parts?.last.text ?? 'No description available';
+      return content;
+    } catch (e) {
+      log('textAndImageInput', error: e);
+      return 'Error occurred while getting description';
+    }
   }
 }
